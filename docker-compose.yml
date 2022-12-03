@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  api:
+    build: .
+    ports:
+      - 8080:80
+    command: python main.py
+    restart: always
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_HOSTNAME=postgres
+      - POSTGRES_DB=item_db
+      - POSTGRES_PASSWORD=2281337
+    restart: always
+    ports:
+      - 5432:5432
