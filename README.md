@@ -1,5 +1,5 @@
-This is a simple REST API project with FastAPI, PostgreSQL and SQLAlchemy.  
-View the detailed task in [TASK.md](./enrollment/Task.md).  
+### This is a simple REST API project with FastAPI, PostgreSQL and SQLAlchemy. ###
+### View the detailed task in [TASK.md](./enrollment/Task.md). ###
   
 Running  
 ------------
@@ -46,4 +46,4 @@ To do this, just go to the 127.0.0.1:<your_port>/docs or 127.0.0.1:<your_port>/r
 
 ###### P.S. ######
 In the submitted task (the enrollment folder), some variables are named inconsistently with PEP8 (such as "parentId").  
-In order not to rewrite unit_test and not get confused in the names among the models, I decided to use the same names.
+In order not to rewrite unit_test and not get confused in the names among the models, I decided to use exactly the same names.
