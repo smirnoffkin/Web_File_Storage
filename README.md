@@ -1,4 +1,5 @@
-This is a simple REST API project with FastAPI, PostgreSQL and SQLAlchemy. View the detailed task in [TASK.md](./enrollment/Task.md).  
+This is a simple REST API project with FastAPI, PostgreSQL and SQLAlchemy.  
+View the detailed task in [TASK.md](./enrollment/Task.md).  
 ------------
 Running  
 ------------
@@ -16,7 +17,7 @@ If you don't have **docker** then you need:
 1. Install **[PostgreSQL](https://www.postgresql.org)**
 2. Configure it to listen on *localhost*
 3. Make some superuser with some password
-4. Go to ./src folder in **[database.py](./src/database.py)** file and change the DATABASE_URL for your database:
+4. Go to ./src folder in **[database.py](./app/database.py)** file and change the DATABASE_URL for your database:
 ~~~
 DATABASE_URL = "postgresql://<your_user>:<your_password>@<your_db_hostname>/<your_db_name>"
 ~~~
