@@ -1,10 +1,11 @@
 from fastapi import Depends
 from sqlalchemy.orm import Session
+
 from database import get_db
 import models
 
 
-# for imports
+# for POST request
 
 def is_item_exist_in_db(item: dict, db: Session = Depends(get_db)) -> bool:
     db_item = db.query(models.Item).filter(models.Item.id == item.get('id')).first()
@@ -19,7 +20,7 @@ def update_all_folders_date(item: models.Item, db: Session = Depends(get_db)) ->
         update_all_folders_date(parent, db)
 
 
-# for nodes
+# for GET request
 
 def convert_models_class_to_dict(item: models.Item) -> dict:
     item_dict = {

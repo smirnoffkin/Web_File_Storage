@@ -1,7 +1,8 @@
+import uvicorn
 from fastapi import FastAPI
+
 from create_db import create_database
 from routers import delete, nodes, imports
-import uvicorn
 
 
 app = FastAPI()
