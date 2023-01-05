@@ -3,3 +3,6 @@ venv/
 .env
 expected.json
 response.json
+
+# unfinished updates
+tests/

@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 
 from database import get_db
 from schemas import Item
+import oauth2
 import models
 
 
@@ -12,7 +13,7 @@ router = APIRouter(
 
 
 @router.delete("/{id}", response_model=Item, tags=['Базовые задачи'], status_code=status.HTTP_200_OK)
-def delete_item(id: str, db: Session = Depends(get_db)) -> Item:
+def delete_item(id: str, db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)) -> Item:
     item_to_delete = db.query(models.Item).filter(models.Item.id == id).first()
 
     if item_to_delete is None:

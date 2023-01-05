@@ -2,11 +2,13 @@ import uvicorn
 from fastapi import FastAPI
 
 from create_db import create_database
-from routers import delete, nodes, imports
+from routers import delete, nodes, imports, auth, user
 
 
 app = FastAPI()
 
+app.include_router(auth.router)
+app.include_router(user.router)
 app.include_router(imports.router)
 app.include_router(nodes.router)
 app.include_router(delete.router)

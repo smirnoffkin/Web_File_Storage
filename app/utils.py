@@ -1,5 +1,6 @@
 from fastapi import Depends
 from sqlalchemy.orm import Session
+from passlib.context import CryptContext
 
 from database import get_db
 import models
@@ -64,3 +65,16 @@ def sum_size(children: list) -> int:
     for i in range(len(children)):
         result += children[i]['size']
     return result
+
+
+# for password hashing
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+
+def get_hashed_password(password: str) -> str:
+    return pwd_context.hash(password)
+
+
+def verify_passwords(plain_password: str, hashed_password: str) -> bool:
+    return pwd_context.verify(plain_password, hashed_password)
