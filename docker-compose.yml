@@ -3,19 +3,21 @@ version: "3"
 services:
   api:
     build: .
+    container_name: 'api-container'
+    command: python main.py
+    env_file:
+      - .env
+    restart: always
     ports:
       - 8080:80
-    command: python main.py
-    restart: always
     depends_on:
       - postgres
 
   postgres:
+    container_name: 'postgres-container'
     image: postgres
-    environment:
-      - POSTGRES_HOSTNAME=postgres
-      - POSTGRES_DB=item_db
-      - POSTGRES_PASSWORD=2281337
     restart: always
+    env_file:
+      - .env
     ports:
-      - 5432:5432
+      - '${POSTGRES_PORT}:${POSTGRES_PORT}'

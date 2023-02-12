@@ -33,12 +33,12 @@ def create_item(data: ItemImportRequest, db: Session = Depends(get_db)) -> ItemI
             db.commit()
         else:
             new_item = models.Item(
-                id = item.get('id'),
-                type = item.get('type'),
-                size = item.get('size'),
-                date = update_date,
-                parentId = item.get('parentId'),
-                url = item.get('url')
+                id=item.get('id'),
+                type=item.get('type'),
+                size=item.get('size'),
+                date=update_date,
+                parentId=item.get('parentId'),
+                url=item.get('url')
             )
 
             utils.update_all_folders_date(new_item, db)
