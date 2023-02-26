@@ -1,5 +1,7 @@
+#### English version #####
+------------
 ### This is a simple REST API project with FastAPI, PostgreSQL and SQLAlchemy. ###
-### View the detailed task in [TASK.md](./enrollment/Task.md). ###
+### View the detail task in [TASK.md](./enrollment/Task.md). ###
   
 Running  
 ------------
@@ -8,18 +10,20 @@ Just:
 ~~~
 docker-compose up --build
 ~~~
-But be sure that nothing else is running on 80(api) and 5432(db) ports.  
-It will build docker image and then start it and another container with PostgreSQL.  
-After that you will be able to access api on 0.0.0.0 or 127.0.0.1 or localhost.
 
 ### Without Docker ###
 If you don't have **docker** then you need:
 1. Install **[PostgreSQL](https://www.postgresql.org)**
-2. Configure it to listen on *localhost*
-3. Make some superuser with some password
-4. Go to ./app folder in **[database.py](./app/database.py)** file and change the DATABASE_URL for your database:
+2. Set up the basic parameters of the Database (superuser, password, port, host, etc.)
+3. Create an .env file in the root of the project  
+Example .env file:
 ~~~
-DATABASE_URL = "postgresql://<your_user>:<your_password>@<your_db_hostname>/<your_db_name>"
+POSTGRES_DEALECT_DRIVER=postgresql
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=1234
+POSTGRES_HOST=localhost
+POSTGRES_DB=item_db
+POSTGRES_PORT=5432
 ~~~
 
 Dependencies
@@ -39,6 +43,12 @@ And finally to run:
 python main.py
 ~~~
 
+Running Tests
+------------
+Just:
+~~~
+pytest -v ./tests/
+~~~
 Features
 ------------
 FastAPI also provides automated API documentation.  
@@ -47,3 +57,65 @@ To do this, just go to the 127.0.0.1:<your_port>/docs or 127.0.0.1:<your_port>/r
 ###### P.S. ######
 In the submitted task (the enrollment folder), some variables are named inconsistently with PEP8 (such as "parentId").  
 In order not to rewrite unit_test and not get confused in the names among the models, I decided to use exactly the same names.
+
+  
+
+##### Русская версия #####
+------------
+### Это простой REST API проект, написанный с использованием FastAPI, PostgreSQL и SQLAlchemy. ###
+### Детальное описание задания смотрите в [TASK.md](./enrollment/Task.md). ###
+  
+Запуск  
+------------
+### В докере ###
+Просто:
+~~~
+docker-compose up --build
+~~~
+
+### Вне докера ###
+Если у вас нет докера, вам нужно:
+1. Установить **[PostgreSQL](https://www.postgresql.org)**
+2. Настроить основные параметры Базы Данных (админ, пароль, порт, хост и тд)
+3. Создать в корне проекта .env файл  
+Пример .env файла:
+~~~
+POSTGRES_DEALECT_DRIVER=postgresql
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=1234
+POSTGRES_HOST=localhost
+POSTGRES_DB=item_db
+POSTGRES_PORT=5432
+~~~
+
+Зависимости
+------------
+Затем нужно установить необходимые пакеты python, для этого:
+~~~
+pip install -r requirements.txt
+~~~
+
+Затем нужно создать необходимую базу данных:
+~~~
+python create_db.py
+~~~
+
+И наконец запуск приложения:
+~~~
+python main.py
+~~~
+
+Запуск тестов
+------------
+Просто:
+~~~
+pytest -v ./tests/
+~~~
+
+"Фича"
+------------
+FastAPI предоставляет автоматическую API документацию.
+Для этого пройто перейдите по адресу 127.0.0.1:<ваш_порт>/docs или 127.0.0.1:<ваш_порт>/redoc, где вы можете попробовать все CRUD методы.
+
+###### P.S. ######
+В представленном задании (папка enrollment), название некоторых переменных не соответствуют PEP8 (например, "parentId"). Чтобы не переписывать предоставленный unit_test и не запутаться в названиях среди моделей, я решил использовать везде точно такие же названия.
