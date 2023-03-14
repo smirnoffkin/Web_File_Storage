@@ -3,7 +3,7 @@ from typing import Optional, List
 from pydantic import BaseModel
 
 
-class BaseItemClass(BaseModel):
+class BaseItem(BaseModel):
     id: str
     type: str
     size: int = 0
@@ -11,18 +11,28 @@ class BaseItemClass(BaseModel):
     url: Optional[str] = None
 
     class Config:
-        orm_mode=True
+        orm_mode = True
 
 
-class Item(BaseItemClass):
+class Item(BaseItem):
+    pass
+
+
+class CreateItem(BaseModel):
+    items: List[Item]
+    updateDate: str
+
+    class Config:
+        orm_mode = True
+
+
+class GetItem(BaseItem):
     date: str
     children: Optional[list] = None
 
 
-class ItemImport(BaseItemClass):
-    pass
+class DeleteItem(BaseModel):
+    id: str
 
-
-class ItemImportRequest(BaseModel):
-    items: List[ItemImport]
-    updateDate: str
+    class Config:
+        orm_mode = True

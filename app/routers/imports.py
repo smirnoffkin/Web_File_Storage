@@ -4,8 +4,8 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from database import get_db
-from schemas import ItemImportRequest
 import models
+import schemas
 import utils
 
 
@@ -13,7 +13,7 @@ router = APIRouter()
 
 
 @router.post("/imports", response_model=Dict, tags=['Базовые задачи'], status_code=status.HTTP_200_OK)
-def create_item(data: ItemImportRequest, db: Session = Depends(get_db)) -> ItemImportRequest:
+def create_item(data: schemas.CreateItem, db: Session = Depends(get_db)) -> schemas.CreateItem:
     data_dict = data.dict()
 
     items = data_dict.get('items')
@@ -50,7 +50,7 @@ def create_item(data: ItemImportRequest, db: Session = Depends(get_db)) -> ItemI
 
 
 @router.put("/imports", response_model=Dict, tags=['Базовые задачи'], status_code=status.HTTP_200_OK)
-def update_item(data: ItemImportRequest, db: Session = Depends(get_db)) -> ItemImportRequest:
+def update_item(data: schemas.CreateItem, db: Session = Depends(get_db)) -> schemas.CreateItem:
     data_dict = data.dict()
 
     items = data_dict.get('items')

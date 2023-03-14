@@ -4,8 +4,8 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from database import get_db
-from schemas import Item
 import models
+import schemas
 import utils
 
 
@@ -14,14 +14,14 @@ router = APIRouter(
 )
 
 
-@router.get("/", response_model=List[Item], tags=['Базовые задачи'], status_code=status.HTTP_200_OK)
+@router.get("/", response_model=List[schemas.GetItem], tags=['Базовые задачи'], status_code=status.HTTP_200_OK)
 def get_all_items(db: Session = Depends(get_db)) -> list:
     items = db.query(models.Item).all()
     return items
 
 
-@router.get("/{id}", response_model=Item, tags=['Базовые задачи'], status_code=status.HTTP_200_OK)
-def get_item(id: str, db: Session = Depends(get_db)) -> Item:
+@router.get("/{id}", response_model=schemas.GetItem, tags=['Базовые задачи'], status_code=status.HTTP_200_OK)
+def get_item(id: str, db: Session = Depends(get_db)) -> schemas.GetItem:
     item = db.query(models.Item).filter(models.Item.id == id).first()
     if item is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Item not found")

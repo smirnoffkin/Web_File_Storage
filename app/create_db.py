@@ -1,10 +1,10 @@
-from database import Base, engine
-from models import Item
+from database import engine
+import models
 
 
 def create_database():
     print("Creating database ...")
-    Base.metadata.create_all(bind=engine)
+    models.Base.metadata.create_all(bind=engine)
 
 
 if __name__ == "__main__":
