@@ -20,6 +20,17 @@ class Settings(BaseSettings):
             path=f"/{self.postgres_db}"
         )
 
+    @property
+    def async_database_url(self):
+        return PostgresDsn.build(
+            scheme=f"{self.postgres_dealect_driver}+asyncpg",
+            user=self.postgres_user,
+            password=self.postgres_password,
+            host=self.postgres_host,
+            port=self.postgres_port,
+            path=f"/{self.postgres_db}"
+        )
+
     class Config:
         env_file = ".env"
 

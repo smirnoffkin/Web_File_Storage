@@ -26,7 +26,7 @@ class CreateItem(BaseModel):
         orm_mode = True
 
 
-class GetItem(BaseItem):
+class GetItem(Item):
     date: str
     children: Optional[list] = None
 

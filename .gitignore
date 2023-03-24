@@ -4,3 +4,4 @@ venv/
 expected.json
 response.json
 .pytest_cache
+.vscode

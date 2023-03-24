@@ -1,5 +1,6 @@
 from fastapi import Depends
-from sqlalchemy.orm import Session
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from database import get_db
 import models
@@ -7,17 +8,19 @@ import models
 
 # for POST request
 
-def is_item_exist_in_db(item: dict, db: Session = Depends(get_db)) -> bool:
-    db_item = db.query(models.Item).filter(models.Item.id == item.get('id')).first()
+async def is_item_exist_in_db(item: dict, db: AsyncSession = Depends(get_db)) -> bool:
+    db_item = await db.execute(select(models.Item).where(models.Item.id == item.get('id')))
+    db_item = db_item.scalar()
     return False if db_item is None else True
 
 
-def update_all_folders_date(item: models.Item, db: Session = Depends(get_db)) -> None:
-    parent = db.query(models.Item).filter(models.Item.id == item.parentId).first()
+async def update_all_folders_date(item: models.Item, db: AsyncSession = Depends(get_db)) -> None:
+    parent = await db.execute(select(models.Item).where(models.Item.id == item.parentId))
+    parent = parent.scalar()
 
     if parent:
         parent.date = item.date
-        update_all_folders_date(parent, db)
+        await update_all_folders_date(parent, db)
 
 
 # for GET request
@@ -35,15 +38,16 @@ def convert_models_class_to_dict(item: models.Item) -> dict:
     return item_dict
 
 
-def get_all_children_list(item_dict: dict, db: Session = Depends(get_db)) -> list:
-    items = db.query(models.Item).filter(models.Item.parentId == item_dict.get('id')).all()
+async def get_all_children_list(item_dict: dict, db: AsyncSession = Depends(get_db)) -> list:
+    items = await db.execute(select(models.Item).where(models.Item.parentId == item_dict.get('id')))
+    items = list(items.scalars())
 
     for i in range(len(items)):
         items[i] = convert_models_class_to_dict(items[i])
 
     if items:
         for item in items:
-            item['children'] = get_all_children_list(item, db)
+            item['children'] = await get_all_children_list(item, db)
             if item['type'] == 'FOLDER':
                 item['size'] = sum_size(item['children'])
     else:
